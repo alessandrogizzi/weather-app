@@ -1,15 +1,26 @@
-import React, { Component } from 'react';
 
-class Store extends Component {
-	state = {
-    appName: 'Weather Up'
-	};
+import React from "react";
 
-	render() {
-		return React.Childern.map(this.props.children, (child) => {
-      return React.cloneElement(child, { ...this.state });
+import { EventEmitter } from "events";
+
+export default class Store extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.eventEmitter = new EventEmitter();
+
+    //Main App State
+    this.state = {
+      appName: "Weather Up"
+    };
+  }
+
+  render() {
+    return React.Children.map(this.props.children, child => {
+      return React.cloneElement(child, {
+        ...this.state,
+        eventEmitter: this.eventEmitter
+      });
     });
-	}
+  }
 }
-
-export default Store;
